@@ -22,7 +22,7 @@ public class FileNameContainsValitor implements Valitor
     }
 
     /**
-     * 默认大小写敏感,不带后缀
+     * 默认大小写敏感,不带后缀,文件名必须全部包含给定的参数
      * 
      * @param args
      */

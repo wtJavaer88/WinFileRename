@@ -16,6 +16,12 @@ public class FileNameLengthValitor implements Valitor
     private int min;
     private int max;
 
+    /**
+     * 给定文件名长度(不含后缀)的闭区间,判断是否满足
+     * 
+     * @param min
+     * @param max
+     */
     public FileNameLengthValitor(int min, int max)
     {
         if(min > max)

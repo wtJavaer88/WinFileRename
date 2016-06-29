@@ -13,7 +13,13 @@ public class FileSizeValitor implements Valitor
     private long min;
     private long max;
 
-    public FileSizeValitor(int min, int max)
+    /**
+     * 给定文件长度的闭区间,判断是否满足
+     * 
+     * @param min
+     * @param max
+     */
+    public FileSizeValitor(long min, long max)
     {
         if(min > max)
         {
