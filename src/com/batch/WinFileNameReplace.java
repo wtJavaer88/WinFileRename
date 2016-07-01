@@ -77,21 +77,26 @@ public class WinFileNameReplace extends AbstractWinFileRen
         String replaceStr = getReplaceStr();
         if(replaceStr == null)
         {
-            replaceStr = "";
+            return null;
         }
+        String targetStr = getTargetStr();
+        targetStr = targetStr == null ? "" : targetStr;
         if(isEnableExp())
         {
-            return fileName.replaceAll(replaceStr, getTargetStr()) + extendName;
+            return fileName.replaceAll(replaceStr, targetStr) + extendName;
         }
         else
         {
+            if(replaceStr != null)
+            {
+                return fileName.replace(replaceStr, targetStr) + extendName;
+            }
             int s = getReplaceStart() - 1;
             int e = getReplaceCount();
             if(s == 0 && e == 0)
             {
                 // 如果没有指定区间,则替换给定字符串
-                return fileName.replace(replaceStr, getTargetStr())
-                        + extendName;
+                return fileName.replace(replaceStr, targetStr) + extendName;
             }
             int length = fileName.length();
             if(e + s > length)
@@ -116,12 +121,12 @@ public class WinFileNameReplace extends AbstractWinFileRen
             {
                 s = length - (getReplaceStart() + getReplaceCount() - 1);
                 e = length - getReplaceStart();
-                return fileName.substring(0, s) + getTargetStr()
+                return fileName.substring(0, s) + targetStr
                         + (e + 1 < length ? fileName.substring(e + 1) : "")
                         + extendName;
             }
 
-            return fileName.substring(0, s) + getTargetStr()
+            return fileName.substring(0, s) + targetStr
                     + fileName.substring(e + s) + extendName;
         }
     }

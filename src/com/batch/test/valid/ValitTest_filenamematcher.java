@@ -19,5 +19,8 @@ public class ValitTest_filenamematcher
 
         fileSizeVa = new FileNameMatcherValitor(true, "^file_\\d+.*txt$");
         System.out.println(fileSizeVa.valid(f));
+
+        fileSizeVa = new FileNameMatcherValitor(true, "^[^0-9].*txt$");
+        System.out.println(fileSizeVa.valid(f));
     }
 }

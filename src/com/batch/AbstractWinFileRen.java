@@ -8,21 +8,21 @@ import java.util.List;
 import java.util.Map;
 
 import com.batch.util.FileNameUtil;
-import com.batch.util.SerializableUtil;
+import com.batch.util.Logger;
 import com.batch.valid.Valitor;
 import com.wnc.basic.BasicDateUtil;
 import com.wnc.basic.BasicFileUtil;
 
 public abstract class AbstractWinFileRen
 {
-    private final String logDir = "D:\\log\\rename\\";
+
     protected RenParameters renParameters = new RenParameters();
     protected String conflictStr = "(%d)";
     protected Map<String, String> renMap = new HashMap<String, String>();// 改后的文件名作为key
     protected Map<String, Integer> targetRepeatTimesMap = new HashMap<String, Integer>();
     protected int fileCounts = 0;
     protected List<Valitor> valitors = new ArrayList<Valitor>();
-    protected boolean testModel = true;
+    protected static boolean testModel = true;
     protected File[] files = null;
 
     public AbstractWinFileRen()
@@ -31,6 +31,11 @@ public abstract class AbstractWinFileRen
         this.targetRepeatTimesMap.clear();
         this.valitors.clear();
         this.fileCounts = 0;
+    }
+
+    public static boolean isTestModel()
+    {
+        return testModel;
     }
 
     /**
@@ -54,25 +59,45 @@ public abstract class AbstractWinFileRen
         this.valitors.add(valitor);
     }
 
+    /**
+     * 可以传入一个文件夹, 或者一个包含了文件列表的文本文件(需要是UTF-8格式)
+     * 
+     * <pre>
+     *    如C:\\1.txt
+     *    里面内容:
+     *      D:\\test\\aaa1.htm
+     *      D:\\test\\aaa2.htm
+     *      D:\\test\\aaa3.htm
+     *    那么程序将会修改txt里面的3个htm文件
+     * </pre>
+     * 
+     * @param folder
+     */
     public void ren(String folder)
     {
-        log("");
-        log(BasicDateUtil.getCurrentDateTimeString() + " 修改目录:" + folder
-                + " 参数: " + renParameters);
-        log("校验器个数" + valitors.size() + " 校验器参数: " + valitors);
-
+        boolean isDir = true;
         if(BasicFileUtil.isExistFolder(folder))
         {
             files = new File(folder).listFiles();
         }
         else if(BasicFileUtil.isExistFile(folder))
         {
+            isDir = false;
             files = FileNameUtil.getFilesFromTxt(folder);
         }
         else
         {
-            throw new RuntimeException("请至少给定一个文件夹或者文本文件路径!");
+            String message = folder + "非法,请至少给定一个文件夹或者文本文件路径!";
+            Logger.logErr(message);
+            throw new RuntimeException(message);
         }
+
+        Logger.log("");
+        Logger.log(BasicDateUtil.getCurrentDateTimeString()
+                + (isDir ? " 修改目录:" : "修改指定文件中的文件列表 [") + folder + "] 参数: "
+                + renParameters);
+        Logger.log("校验器个数" + valitors.size() + " 校验器参数: " + valitors);
+
         if(files != null && files.length > 0)
         {
             try
@@ -82,14 +107,15 @@ public abstract class AbstractWinFileRen
             catch (Exception ex)
             {
                 ex.printStackTrace();
-                logErr(BasicDateUtil.getCurrentDateTimeString() + " "
+                Logger.logErr(BasicDateUtil.getCurrentDateTimeString() + " "
                         + ex.getMessage());
-                logErr(Arrays.toString(ex.getStackTrace()));
-                logErr("\r\n");
+                Logger.logErr(Arrays.toString(ex.getStackTrace()));
+                Logger.logErr("\r\n");
                 new RuntimeException("发生异常:" + ex.getMessage());
             }
         }
-        SerializableUtil.serializableObject(logDir, renMap);
+
+        Logger.serialize(renMap);
     }
 
     public Map<String, String> getRenMap()
@@ -114,7 +140,7 @@ public abstract class AbstractWinFileRen
             String target = renOneFile(fileName, extendName);
             if(target != null)
             {
-                log("改名前:" + absolutePath);
+                Logger.log("改名前:" + absolutePath);
                 if(!targetRepeatTimesMap.containsKey(target))
                 {
                     // 初始重复值为1,表示该文件名独一无二
@@ -136,7 +162,7 @@ public abstract class AbstractWinFileRen
                 }
                 String targetPath = BasicFileUtil.getMakeFilePath(folder,
                         target);
-                log("改名后:" + targetPath);
+                Logger.log("改名后:" + targetPath);
                 if(!this.testModel)
                     BasicFileUtil.renameFile(absolutePath, targetPath);
                 renMap.put(targetPath, absolutePath);
@@ -154,33 +180,6 @@ public abstract class AbstractWinFileRen
             }
         }
         return true;
-    }
-
-    private void log(String msg)
-    {
-
-        if(!BasicFileUtil.isExistFolder(logDir))
-        {
-            throw new RuntimeException("日志文件夹不存在!");
-        }
-        System.out.println(msg);
-        BasicFileUtil.writeFileString(
-                logDir + "renlog" + BasicDateUtil.getCurrentDateString()
-                        + ".txt", msg + "\r\n", null, true);
-    }
-
-    private void logErr(String msg)
-    {
-        if(!BasicFileUtil.isExistFolder("D:\\log\\rename\\"))
-        {
-            throw new RuntimeException("日志文件夹不存在!");
-        }
-        BasicFileUtil
-                .writeFileString(
-                        logDir + "renErrlog"
-                                + BasicDateUtil.getCurrentDateString() + ".txt",
-                        msg.replace(",", "\r\n") + "\r\n", null, true);
-
     }
 
     /**

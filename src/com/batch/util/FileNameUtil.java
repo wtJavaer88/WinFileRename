@@ -63,6 +63,10 @@ public class FileNameUtil
         {
             if(BasicFileUtil.isExistFile(file))
                 list.add(new File(file));
+            else
+            {
+                Logger.logErr(file + " 文件不存在");
+            }
         }
         return list.toArray(new File[list.size()]);
     }

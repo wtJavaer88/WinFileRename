@@ -11,14 +11,21 @@ import com.wnc.basic.BasicDateUtil;
 
 public class SerializableUtil
 {
+    /**
+     * 序列化
+     * 
+     * @param dir
+     * @param obj
+     */
     public static void serializableObject(String dir, Object obj)
     {
         FileOutputStream fos;
         try
         {
-            fos = new FileOutputStream(dir
-                    + (BasicDateUtil.getCurrentDateTimeString() + ".tmp")
-                            .replace(" ", "_").replace(":", ""));
+            String saveName = (BasicDateUtil.getCurrentDateTime() + ".tmp")
+                    .replace(" ", "_").replace(":", "");
+            String savePath = dir + saveName;
+            fos = new FileOutputStream(savePath);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(obj);
             oos.close();
