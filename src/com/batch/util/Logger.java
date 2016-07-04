@@ -18,7 +18,7 @@ public class Logger
             throw new RuntimeException("日志文件夹不存在!");
         }
 
-        System.out.println(msg);
+        // System.out.println(msg);
         if(!AbstractWinFileRen.isTestModel())
             BasicFileUtil.writeFileString(
                     logDir + "renlog" + BasicDateUtil.getCurrentDateString()

@@ -25,7 +25,7 @@ public class RenameTask implements Runnable {
         if(target != null)
         {
             Logger.log("改名前:" + absolutePath);
-            target = ProductQueen.pushAndGetValidTarget(target, extendName);
+            target = ProductQueue.pushAndGetValidTarget(target, extendName);
             String targetPath = BasicFileUtil.getMakeFilePath(folder,
                     target);
             Logger.log("改名后:" + targetPath);

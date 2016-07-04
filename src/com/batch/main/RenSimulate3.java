@@ -10,9 +10,9 @@ public class RenSimulate3
 {
     public static void main(String[] args)
     {
-    	long st = System.currentTimeMillis();
+        long st = System.currentTimeMillis();
         switchTo(1);
-        System.out.println("耗时:  "+(System.currentTimeMillis() - st)/1000);
+        System.out.println("耗时:  " + (System.currentTimeMillis() - st) / 1000);
     }
 
     private static void switchTo(int caseInt)
@@ -26,18 +26,21 @@ public class RenSimulate3
             rollback();
             break;
         case 3:
-        	createFiles();
+            createFiles();
         }
     }
 
-    private static void createFiles(){
-    	for(int i =1; i < 100000; i++){
-    		BasicFileUtil.writeFileString(folder+"["+i+"]AA.html", "", null, false);
-    	}
+    private static void createFiles()
+    {
+        for (int i = 1; i < 100000; i++)
+        {
+            BasicFileUtil.writeFileString(folder + "[" + i + "]AA.html", "",
+                    null, false);
+        }
     }
-    
+
     static String folder = "E:\\Downloads\\toutiao\\articles\\";
-    
+
     private static void ren()
     {
         for (int i = 5; i >= 1; i--)
@@ -53,14 +56,19 @@ public class RenSimulate3
             fileRen2.addValitor(new FileNameMatcherValitor(true, "^\\[\\d{"
                     + indexLength + "}\\].*.html"));
             fileRen2.ren(folder);
-            while(fileRen2.isAlive()){
-            	try {
-    				Thread.sleep(100);
-    			} catch (InterruptedException e) {
-    				// TODO Auto-generated catch block
-    				e.printStackTrace();
-    			}
+            while (fileRen2.isAlive())
+            {
+                try
+                {
+                    Thread.sleep(100);
+                }
+                catch (InterruptedException e)
+                {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
             }
+            fileRen2.saveSerializeData();
         }
     }
 
@@ -77,14 +85,19 @@ public class RenSimulate3
         fileRen2.addValitor(new FileNameMatcherValitor(true,
                 "^\\[0{1,}\\d{1,5}\\].*.html"));
         fileRen2.ren(folder);
-        while(fileRen2.isAlive()){
-        	try {
-				Thread.sleep(100);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+        while (fileRen2.isAlive())
+        {
+            try
+            {
+                Thread.sleep(100);
+            }
+            catch (InterruptedException e)
+            {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
         }
+        fileRen2.saveSerializeData();
     }
 
     private static String repeat(String str, int times)

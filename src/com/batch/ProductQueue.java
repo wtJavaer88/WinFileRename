@@ -5,7 +5,7 @@ import java.util.Map;
 
 import com.batch.util.FileNameUtil;
 
-public class ProductQueen {
+public class ProductQueue {
 
     private static Map<String, Integer> targetRepeatTimesMap = new HashMap<String, Integer>();
     private static String conflictStr = "(%d)";
