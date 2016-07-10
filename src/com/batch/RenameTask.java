@@ -1,0 +1,39 @@
+package com.batch;
+
+import java.io.File;
+
+import com.batch.util.FileNameUtil;
+import com.batch.util.Logger;
+import com.wnc.basic.BasicFileUtil;
+
+public class RenameTask implements Runnable {
+
+	File file ;
+	AbstractWinFileRen abstractWinFileRen;
+	public RenameTask(AbstractWinFileRen abstractWinFileRen,File file){
+		this.abstractWinFileRen = abstractWinFileRen;
+		this.file = file;
+	}
+	@Override
+	public void run() {
+		String absolutePath = file.getAbsolutePath();
+        String folder = FileNameUtil.getFolder(absolutePath);
+        String fileName = FileNameUtil.getFileNameNoExtend(absolutePath);
+        String extendName = FileNameUtil.getFileExtend(absolutePath);
+
+        String target = abstractWinFileRen.renOneFile(fileName, extendName);
+        if(target != null)
+        {
+            Logger.log("改名前:" + absolutePath);
+            target = ProductQueen.pushAndGetValidTarget(target, extendName);
+            String targetPath = BasicFileUtil.getMakeFilePath(folder,
+                    target);
+            Logger.log("改名后:" + targetPath);
+            
+            if(!AbstractWinFileRen.testModel)
+                BasicFileUtil.renameFile(absolutePath, targetPath);
+            abstractWinFileRen.putNewPair(targetPath, absolutePath);
+        }	
+	}
+
+}

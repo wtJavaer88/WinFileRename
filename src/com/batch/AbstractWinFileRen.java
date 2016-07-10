@@ -6,6 +6,10 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ThreadPoolExecutor;
+
+import javax.swing.plaf.synth.SynthSpinnerUI;
 
 import com.batch.util.FileNameUtil;
 import com.batch.util.Logger;
@@ -17,18 +21,20 @@ public abstract class AbstractWinFileRen
 {
 
     protected RenParameters renParameters = new RenParameters();
-    protected String conflictStr = "(%d)";
+    
     protected Map<String, String> renMap = new HashMap<String, String>();// 改后的文件名作为key
-    protected Map<String, Integer> targetRepeatTimesMap = new HashMap<String, Integer>();
     protected int fileCounts = 0;
     protected List<Valitor> valitors = new ArrayList<Valitor>();
     protected static boolean testModel = true;
     protected File[] files = null;
 
+    ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors
+			.newFixedThreadPool(5);
+    
     public AbstractWinFileRen()
     {
         this.renMap.clear();
-        this.targetRepeatTimesMap.clear();
+        ProductQueen.clear();
         this.valitors.clear();
         this.fileCounts = 0;
     }
@@ -132,45 +138,20 @@ public abstract class AbstractWinFileRen
             {
                 continue;
             }
-            String absolutePath = file.getAbsolutePath();
-            String folder = FileNameUtil.getFolder(absolutePath);
-            String fileName = FileNameUtil.getFileNameNoExtend(absolutePath);
-            String extendName = FileNameUtil.getFileExtend(absolutePath);
-
-            String target = renOneFile(fileName, extendName);
-            if(target != null)
-            {
-                Logger.log("改名前:" + absolutePath);
-                if(!targetRepeatTimesMap.containsKey(target))
-                {
-                    // 初始重复值为1,表示该文件名独一无二
-                    targetRepeatTimesMap.put(target, 1);
-                }
-                else
-                {
-                    // 如果已经有了,则必然重复,重复值+1
-                    int count = targetRepeatTimesMap.get(target);
-                    targetRepeatTimesMap.remove(target);
-                    targetRepeatTimesMap.put(target, count + 1);
-                }
-                if(targetRepeatTimesMap.get(target) > 1)
-                {
-                    // System.out.println("target重复:" + target + "  "
-                    // + FileNameUtil.getFileNameNoExtend(target));
-                    target = String.format(fileName + conflictStr + extendName,
-                            targetRepeatTimesMap.get(target));
-                }
-                String targetPath = BasicFileUtil.getMakeFilePath(folder,
-                        target);
-                Logger.log("改名后:" + targetPath);
-                if(!this.testModel)
-                    BasicFileUtil.renameFile(absolutePath, targetPath);
-                renMap.put(targetPath, absolutePath);
-            }
+            executeService(file);
         }
+        executor.shutdown();
     }
 
-    private boolean valid(File file)
+	public boolean isAlive() {
+		return executor.getActiveCount() > 0;
+	}
+
+    private void executeService(File file) {
+    	executor.execute(new RenameTask(this, file));
+	}
+
+	private boolean valid(File file)
     {
         for (Valitor valitor : valitors)
         {
@@ -190,4 +171,8 @@ public abstract class AbstractWinFileRen
      * @return
      */
     public abstract String renOneFile(String fileName, String extendName);
+
+	public synchronized void putNewPair(String targetPath, String absolutePath) {
+		 this.renMap.put(targetPath, absolutePath);		
+	}
 }
