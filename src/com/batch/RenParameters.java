@@ -3,11 +3,11 @@ package com.batch;
 public class RenParameters {
 	// 删除和替换模式用正则表达式replaceAll
 	private boolean enableExp;
-	// 倒序选择,与选择的两个值配合使用
+	// 倒序选择,与选择的两个值配合使用,还可用在插入模式
 	private boolean enableReverse;
 	// 删除模式用
 	private String deleteStr;
-	// 选择,删除,替换,添加模式都可用
+	// 选择,删除,替换模式都可用
 	private int selectStart;
 	private int selectCount;
 	// 替换模式用

@@ -14,7 +14,7 @@ public class RenSimulate {
 		fileRen2.addValitor(new FileNameExtendValitor(".pdf"));
 		fileRen2.ren(folder);
 
-		fileRen2 = new WinFileNameIndex().setIndexAlign(true).setIndexRule("<#>_<SELF>");
+		fileRen2 = new WinFileNameIndex().openIndexAlign().setIndexRule("<#>_<SELF>");
 		fileRen2.closeTestModel();
 		fileRen2.addValitor(new FileNameExtendValitor(".pdf"));
 		fileRen2.ren(folder);

@@ -21,7 +21,7 @@ public class T {
 
 	private static void test1() {
 		// System.out.println(System.currentTimeMillis());
-		AbstractWinFileRen fileRen2 = new WinFileNameIndex().setIndexAlign(true).setIndexRule("<#>_<SELF>");
+		AbstractWinFileRen fileRen2 = new WinFileNameIndex().openIndexAlign().setIndexRule("<#>_<SELF>");
 		// fileRen2.closeTestModel();
 		fileRen2.addValitor(new FileNameExtendValitor(".txt"));
 		fileRen2.ren("D:\\1.txt");
