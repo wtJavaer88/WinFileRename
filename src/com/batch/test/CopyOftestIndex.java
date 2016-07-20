@@ -1,7 +1,7 @@
 package com.batch.test;
 
-import com.batch.AbstractWinFileRen;
-import com.batch.WinFileNameIndex;
+import com.batch.ren.AbstractWinFileRen;
+import com.batch.ren.WinFileNameIndex;
 
 public class CopyOftestIndex
 {

@@ -1,7 +1,7 @@
 package com.batch.test.valid;
 
-import com.batch.AbstractWinFileRen;
-import com.batch.WinFileNameIndex;
+import com.batch.ren.AbstractWinFileRen;
+import com.batch.ren.WinFileNameIndex;
 import com.batch.valid.FileNameContainsValitor;
 import com.batch.valid.FileNameExtendValitor;
 import com.batch.valid.FileNameLengthValitor;

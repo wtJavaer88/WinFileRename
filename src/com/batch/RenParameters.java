@@ -1,226 +1,128 @@
 package com.batch;
 
-public class RenParameters
-{
+public class RenParameters {
+	// 删除和替换模式用正则表达式replaceAll
+	private boolean enableExp;
+	// 倒序选择,与选择的两个值配合使用
+	private boolean enableReverse;
+	// 删除模式用
+	private String deleteStr;
+	// 选择,删除,替换,添加模式都可用
+	private int selectStart;
+	private int selectCount;
+	// 替换模式用
+	private String replaceStr;
+	private String replaceTargetStr;
+	// 插入模式用
+	private int insertPos;
+	private String insertStr;
+	// 序列模式用
+	private String indexRule;
+	private boolean indexAlign;
+	// 扩展名模式用
+	private String extendName;
 
-    private boolean enableExp;
-    private boolean enableReverse;
+	public String getReplaceTargetStr() {
+		return replaceTargetStr;
+	}
 
-    private String deleteStr;
-    private int deleteStart;
-    private int deleteCount;
+	public void setReplaceTargetStr(String replaceTargetStr) {
+		this.replaceTargetStr = replaceTargetStr;
+	}
 
-    private int selectStart;
-    private int selectCount;
+	public boolean isIndexAlign() {
+		return indexAlign;
+	}
 
-    private String replaceStr;
-    private String targetStr;
-    private int replaceStart;
-    private int replaceCount;
-    private int replacePos;
+	public void setIndexAlign(boolean indexAlign) {
+		this.indexAlign = indexAlign;
+	}
 
-    private int insertPos;
-    private String insertStr;
+	public String getInsertStr() {
+		return insertStr;
+	}
 
-    private String indexRule;
-    private boolean indexAlign;
+	public void setInsertStr(String insertStr) {
+		this.insertStr = insertStr;
+	}
 
-    private String extendName;
-    private boolean isLowerExtend;
+	public boolean isEnableExp() {
+		return enableExp;
+	}
 
-    public String getTargetStr()
-    {
-        return targetStr;
-    }
+	public void setEnableExp(boolean enableExp) {
+		this.enableExp = enableExp;
+	}
 
-    public void setTargetStr(String targetStr)
-    {
-        this.targetStr = targetStr;
-    }
+	public String getDeleteStr() {
+		return deleteStr;
+	}
 
-    public boolean isIndexAlign()
-    {
-        return indexAlign;
-    }
+	public void setDeleteStr(String deleteStr) {
+		this.deleteStr = deleteStr;
+	}
 
-    public void setIndexAlign(boolean indexAlign)
-    {
-        this.indexAlign = indexAlign;
-    }
+	public String getReplaceStr() {
+		return replaceStr;
+	}
 
-    public String getInsertStr()
-    {
-        return insertStr;
-    }
+	public void setReplaceStr(String replaceStr) {
+		this.replaceStr = replaceStr;
+	}
 
-    public void setInsertStr(String insertStr)
-    {
-        this.insertStr = insertStr;
-    }
+	public int getInsertPos() {
+		return insertPos;
+	}
 
-    public boolean isEnableExp()
-    {
-        return enableExp;
-    }
+	public void setInsertPos(int insertPos) {
+		this.insertPos = insertPos;
+	}
 
-    public void setEnableExp(boolean enableExp)
-    {
-        this.enableExp = enableExp;
-    }
+	public String getIndexRule() {
+		return indexRule;
+	}
 
-    public String getDeleteStr()
-    {
-        return deleteStr;
-    }
+	public void setIndexRule(String indexRule) {
+		this.indexRule = indexRule;
+	}
 
-    public void setDeleteStr(String deleteStr)
-    {
-        this.deleteStr = deleteStr;
-    }
+	public String getExtendName() {
+		return extendName;
+	}
 
-    public int getDeleteStart()
-    {
-        return deleteStart;
-    }
+	public void setExtendName(String extendName) {
+		this.extendName = extendName;
+	}
 
-    public void setDeleteStart(int deleteStart)
-    {
-        this.deleteStart = deleteStart;
-    }
+	@Override
+	public String toString() {
+		return "RenParameters [enableExp=" + enableExp + ", enableReverse=" + enableReverse + ", deleteStr=" + deleteStr
+				+ ", selectStart=" + selectStart + ", selectCount=" + selectCount + ", replaceStr=" + replaceStr
+				+ ", replaceTargetStr=" + replaceTargetStr + ", insertPos=" + insertPos + ", insertStr=" + insertStr
+				+ ", indexRule=" + indexRule + ", indexAlign=" + indexAlign + ", extendName=" + extendName + "]";
+	}
 
-    public int getDeleteCount()
-    {
-        return deleteCount;
-    }
+	public boolean isEnableReverse() {
+		return enableReverse;
+	}
 
-    public void setDeleteCount(int deleteCount)
-    {
-        this.deleteCount = deleteCount;
-    }
+	public void setEnableReverse(boolean enableReverse) {
+		this.enableReverse = enableReverse;
+	}
 
-    public String getReplaceStr()
-    {
-        return replaceStr;
-    }
+	public int getSelectStart() {
+		return selectStart;
+	}
 
-    public void setReplaceStr(String replaceStr)
-    {
-        this.replaceStr = replaceStr;
-    }
+	public void setSelectStart(int selectStart) {
+		this.selectStart = selectStart;
+	}
 
-    public int getReplaceStart()
-    {
-        return replaceStart;
-    }
+	public int getSelectCount() {
+		return selectCount;
+	}
 
-    public void setReplaceStart(int replaceStart)
-    {
-        this.replaceStart = replaceStart;
-    }
-
-    public int getReplaceCount()
-    {
-        return replaceCount;
-    }
-
-    public void setReplaceCount(int replaceCount)
-    {
-        this.replaceCount = replaceCount;
-    }
-
-    public int getReplacePos()
-    {
-        return replacePos;
-    }
-
-    public void setReplacePos(int replacePos)
-    {
-        this.replacePos = replacePos;
-    }
-
-    public int getInsertPos()
-    {
-        return insertPos;
-    }
-
-    public void setInsertPos(int insertPos)
-    {
-        this.insertPos = insertPos;
-    }
-
-    public String getIndexRule()
-    {
-        return indexRule;
-    }
-
-    public void setIndexRule(String indexRule)
-    {
-        this.indexRule = indexRule;
-    }
-
-    public String getExtendName()
-    {
-        return extendName;
-    }
-
-    public void setExtendName(String extendName)
-    {
-        this.extendName = extendName;
-    }
-
-    public boolean isLowerExtend()
-    {
-        return isLowerExtend;
-    }
-
-    public void setLowerExtend(boolean isLowerExtend)
-    {
-        this.isLowerExtend = isLowerExtend;
-    }
-
-    @Override
-    public String toString()
-    {
-        return "RenParameters [(开启正则)enableExp=" + enableExp
-                + ", (开启倒序)enableReverse=" + enableReverse
-                + ", (删除源)deleteStr=" + deleteStr + ", deleteStart="
-                + deleteStart + ", deleteCount=" + deleteCount
-                + ", (替换源)replaceStr=" + replaceStr + ", (替换目标)targetStr="
-                + targetStr + ", replaceStart=" + replaceStart
-                + ", replaceCount=" + replaceCount + ", replacePos="
-                + replacePos + ", insertPos=" + insertPos + ", insertStr="
-                + insertStr + ", indexRule=" + indexRule + ", indexAlign="
-                + indexAlign + ", extendName=" + extendName
-                + ", isLowerExtend=" + isLowerExtend + "]";
-    }
-
-    public boolean isEnableReverse()
-    {
-        return enableReverse;
-    }
-
-    public void setEnableReverse(boolean enableReverse)
-    {
-        this.enableReverse = enableReverse;
-    }
-
-    public int getSelectStart()
-    {
-        return selectStart;
-    }
-
-    public void setSelectStart(int selectStart)
-    {
-        this.selectStart = selectStart;
-    }
-
-    public int getSelectCount()
-    {
-        return selectCount;
-    }
-
-    public void setSelectCount(int selectCount)
-    {
-        this.selectCount = selectCount;
-    }
+	public void setSelectCount(int selectCount) {
+		this.selectCount = selectCount;
+	}
 }

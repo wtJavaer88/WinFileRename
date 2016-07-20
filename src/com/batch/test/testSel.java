@@ -1,7 +1,7 @@
 package com.batch.test;
 
-import com.batch.AbstractWinFileRen;
-import com.batch.WinFileNameSelect;
+import com.batch.ren.AbstractWinFileRen;
+import com.batch.ren.WinFileNameSelect;
 
 public class testSel
 {

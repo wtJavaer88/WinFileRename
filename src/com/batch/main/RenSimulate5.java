@@ -1,7 +1,7 @@
 package com.batch.main;
 
-import com.batch.AbstractWinFileRen;
-import com.batch.WinFileNameDelete;
+import com.batch.ren.AbstractWinFileRen;
+import com.batch.ren.WinFileNameDelete;
 
 public class RenSimulate5
 {
