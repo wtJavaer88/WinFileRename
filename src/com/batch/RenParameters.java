@@ -10,6 +10,9 @@ public class RenParameters
     private int deleteStart;
     private int deleteCount;
 
+    private int selectStart;
+    private int selectCount;
+
     private String replaceStr;
     private String targetStr;
     private int replaceStart;
@@ -199,5 +202,25 @@ public class RenParameters
     public void setEnableReverse(boolean enableReverse)
     {
         this.enableReverse = enableReverse;
+    }
+
+    public int getSelectStart()
+    {
+        return selectStart;
+    }
+
+    public void setSelectStart(int selectStart)
+    {
+        this.selectStart = selectStart;
+    }
+
+    public int getSelectCount()
+    {
+        return selectCount;
+    }
+
+    public void setSelectCount(int selectCount)
+    {
+        this.selectCount = selectCount;
     }
 }

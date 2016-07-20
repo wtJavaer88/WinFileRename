@@ -11,7 +11,7 @@ public class RenSimulate3
     public static void main(String[] args)
     {
         long st = System.currentTimeMillis();
-        switchTo(1);
+        switchTo(2);
         System.out.println("耗时:  " + (System.currentTimeMillis() - st) / 1000);
     }
 
@@ -64,7 +64,6 @@ public class RenSimulate3
                 }
                 catch (InterruptedException e)
                 {
-                    // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
             }
@@ -83,7 +82,7 @@ public class RenSimulate3
         fileRen2.closeTestModel();
         fileRen2.addValitor(new FileNameExtendValitor(".html"));
         fileRen2.addValitor(new FileNameMatcherValitor(true,
-                "^\\[0{1,}\\d{1,5}\\].*.html"));
+                "^\\[0\\d{5}\\].*.html$"));
         fileRen2.ren(folder);
         while (fileRen2.isAlive())
         {
@@ -93,7 +92,6 @@ public class RenSimulate3
             }
             catch (InterruptedException e)
             {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }

@@ -2,6 +2,12 @@ package com.batch;
 
 import com.wnc.basic.BasicStringUtil;
 
+/**
+ * 修改文件扩展名
+ * 
+ * @author cpr216
+ * 
+ */
 public class WinFileNameExtend extends AbstractWinFileRen
 {
 

@@ -23,6 +23,10 @@ public class Logger
             BasicFileUtil.writeFileString(
                     logDir + "renlog" + BasicDateUtil.getCurrentDateString()
                             + ".txt", msg + "\r\n", null, true);
+        else
+        {
+            System.out.println(msg);
+        }
     }
 
     public static void logErr(String msg)
