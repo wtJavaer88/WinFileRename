@@ -1,5 +1,8 @@
 package com.batch.ren;
 
+import com.wnc.basic.BasicStringUtil;
+import com.wnc.string.PatternUtil;
+
 /**
  * 修改文件名为选定的一段字符串
  * 
@@ -13,6 +16,15 @@ public class WinFileNameSelect extends AbstractWinFileRen {
 
 	public WinFileNameSelect openEnableReverse() {
 		this.renParameters.setEnableReverse(true);
+		return this;
+	}
+
+	public String getReplaceStr() {
+		return this.renParameters.getReplaceStr();
+	}
+
+	public WinFileNameSelect setReplaceStr(String replaceStr) {
+		this.renParameters.setReplaceStr(replaceStr);
 		return this;
 	}
 
@@ -36,6 +48,13 @@ public class WinFileNameSelect extends AbstractWinFileRen {
 
 	@Override
 	public String renOneFile(String fileName, String extendName) {
+		if (BasicStringUtil.isNotNullString(getReplaceStr())) {
+			if (!isEnableReverse())
+				return PatternUtil.getFirstPattern(fileName, getReplaceStr()) + extendName;
+			else {
+				return PatternUtil.getLastPattern(fileName, getReplaceStr()) + extendName;
+			}
+		}
 		int s = getSelectStart() - 1;
 		int e = getSelectCount();
 		int length = fileName.length();
