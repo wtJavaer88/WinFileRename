@@ -49,10 +49,18 @@ public class WinFileNameSelect extends AbstractWinFileRen {
 	@Override
 	public String renOneFile(String fileName, String extendName) {
 		if (BasicStringUtil.isNotNullString(getReplaceStr())) {
-			if (!isEnableReverse())
-				return PatternUtil.getFirstPattern(fileName, getReplaceStr()) + extendName;
-			else {
-				return PatternUtil.getLastPattern(fileName, getReplaceStr()) + extendName;
+			if (!isEnableReverse()) {
+				String firstPattern = PatternUtil.getFirstPattern(fileName, getReplaceStr());
+				if (BasicStringUtil.isNullString(firstPattern)) {
+					return null;
+				}
+				return firstPattern + extendName;
+			} else {
+				String firstPattern = PatternUtil.getLastPattern(fileName, getReplaceStr());
+				if (BasicStringUtil.isNullString(firstPattern)) {
+					return null;
+				}
+				return firstPattern + extendName;
 			}
 		}
 		int s = getSelectStart() - 1;

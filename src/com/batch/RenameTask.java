@@ -26,10 +26,9 @@ public class RenameTask implements Runnable {
 
 		String target = abstractWinFileRen.renOneFile(fileName, extendName);
 		if (target != null) {
-			Logger.log("改名前:" + absolutePath);
 			target = ProductQueue.pushAndGetValidTarget(target, extendName);
 			String targetPath = BasicFileUtil.getMakeFilePath(folder, target);
-			Logger.log("改名后:" + targetPath);
+			Logger.log("改名前:" + absolutePath + "\t\t改名后:" + targetPath);
 
 			if (!AbstractWinFileRen.isTestModel())
 				BasicFileUtil.renameFile(absolutePath, targetPath);

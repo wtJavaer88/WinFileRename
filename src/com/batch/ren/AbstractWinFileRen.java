@@ -95,7 +95,7 @@ public abstract class AbstractWinFileRen {
 				loopRename(files);
 			} catch (Exception ex) {
 				logWhenError(ex);
-				new RuntimeException("发生异常:" + ex.getMessage());
+				throw new RuntimeException("发生异常:" + ex.getMessage());
 			}
 		}
 	}
