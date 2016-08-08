@@ -1,15 +1,17 @@
 package com.batch;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
 import com.batch.util.FileNameUtil;
+import com.wnc.basic.BasicFileUtil;
 
 /**
  * 记录每次改名后的文件名,以及他们出现的次数,好对重复文件重命名
  * 
  * @author cpr216
- *
+ * 
  */
 public class ProductQueue {
 
@@ -25,28 +27,32 @@ public class ProductQueue {
 	 * 
 	 * @param target
 	 * @param extendName
+	 * @param extendName2
 	 * @return
 	 */
-	public synchronized static String pushAndGetValidTarget(String target, String extendName) {
-		if (!targetRepeatTimesMap.containsKey(target)) {
+	public synchronized static String pushAndGetValidTarget(String folder, String target) {
+		String path = folder + File.separator + target;
+		if (!targetRepeatTimesMap.containsKey(path)) {
 			// 初始重复值为1,表示该文件名独一无二
-			targetRepeatTimesMap.put(target, 1);
+			targetRepeatTimesMap.put(path, 1);
 		} else {
 			// 如果已经有了,则必然重复,重复值+1
-			int count = targetRepeatTimesMap.get(target);
-			targetRepeatTimesMap.remove(target);
-			targetRepeatTimesMap.put(target, count + 1);
+			int count = targetRepeatTimesMap.get(path);
+			targetRepeatTimesMap.remove(path);
+			targetRepeatTimesMap.put(path, count + 1);
 		}
-		return getValidTarget(target, extendName);
+		return getValidTarget(path, target);
 	}
 
-	private static String getValidTarget(String target, String extendName) {
-		Integer integer = targetRepeatTimesMap.get(target);
+	private static String getValidTarget(String path, String target) {
+		Integer integer = targetRepeatTimesMap.get(path);
+		String ret = target;
 		if (integer > 1) {
 			// System.out.println("target重复:" + target + " "
 			// + FileNameUtil.getFileNameNoExtend(target));
-			target = String.format(FileNameUtil.getFileNameNoExtend(target) + conflictStr + extendName, integer);
+			ret = String.format(FileNameUtil.getFileNameNoExtend(path) + conflictStr + BasicFileUtil.getFileType(path),
+					integer);
 		}
-		return target;
+		return ret;
 	}
 }

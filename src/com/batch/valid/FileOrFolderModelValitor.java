@@ -12,10 +12,10 @@ public class FileOrFolderModelValitor implements Valitor {
 	private boolean dealFolder = true;
 
 	/**
-	 * 匹配的时候带上后缀一起匹配
+	 * 指定操作文件或文件夹
 	 * 
-	 * @param ignoreCase
-	 * @param patternStr
+	 * @param dealFile
+	 * @param dealFolder
 	 */
 	public FileOrFolderModelValitor(boolean dealFile, boolean dealFolder) {
 		this.dealFile = dealFile;

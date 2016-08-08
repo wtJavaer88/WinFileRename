@@ -57,7 +57,7 @@ public class FileNameUtil
 
     public static File[] getFilesFromTxt(String txt)
     {
-        List<String> files = FileOp.readFrom(txt, "UTF-8");
+        List<String> files = FileOp.readFrom(txt, "GBK");
         List<File> list = new ArrayList<File>();
         for (String file : files)
         {
