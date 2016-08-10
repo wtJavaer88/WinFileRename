@@ -30,7 +30,7 @@ public class ProductQueue {
 	 * @param extendName2
 	 * @return
 	 */
-	public synchronized static String pushAndGetValidTarget(String folder, String target) {
+	public synchronized static String pushAndGetValidTarget(String folder, String target, boolean isFolder) {
 		String path = folder + File.separator + target;
 		if (!targetRepeatTimesMap.containsKey(path)) {
 			// 初始重复值为1,表示该文件名独一无二
@@ -41,17 +41,21 @@ public class ProductQueue {
 			targetRepeatTimesMap.remove(path);
 			targetRepeatTimesMap.put(path, count + 1);
 		}
-		return getValidTarget(path, target);
+		return getValidTarget(path, target, isFolder);
 	}
 
-	private static String getValidTarget(String path, String target) {
+	private static String getValidTarget(String path, String target, boolean isFolder) {
 		Integer integer = targetRepeatTimesMap.get(path);
 		String ret = target;
 		if (integer > 1) {
 			// System.out.println("target重复:" + target + " "
 			// + FileNameUtil.getFileNameNoExtend(target));
-			ret = String.format(FileNameUtil.getFileNameNoExtend(path) + conflictStr + BasicFileUtil.getFileType(path),
-					integer);
+			if (isFolder) {
+				ret = String.format(target + conflictStr, integer);
+			} else
+				ret = String.format(
+						FileNameUtil.getFileNameNoExtend(path) + conflictStr + BasicFileUtil.getFileType(path),
+						integer);
 		}
 		return ret;
 	}
